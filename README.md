@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏫 Salas de Aula (MVP)
 
-## Getting Started
+Uma Aplicação Web Progressiva (PWA) desenvolvida para simplificar a vida de alunos e professores. O foco do projeto é a consulta ultra-rápida ("zero clique") das salas de aula do dia, eliminando a necessidade de mensagens em grupos ou buscas complexas em portais acadêmicos.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Funcionalidades (MVP)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+*   **Visão "Hoje":** Exibição imediata das disciplinas e salas correspondentes ao dia atual, com destaque visual.
+*   **Visão "Semana":** Consulta rápida da grade completa, organizada de segunda a sábado.
+*   **Avisos Fixos:** Banner de alerta orientando a verificação diária de mudanças.
+*   **PWA Instalável:** Pode ser adicionado à tela inicial de smartphones (iOS e Android) para acesso nativo, rápido e sem barra de navegação do browser.
+*   **Dark Mode Nativo:** Interface desenvolvida 100% em modo escuro para conforto visual e economia de bateria em telas OLED.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Tecnologias Utilizadas
 
-## Learn More
+*   **Framework:** [Next.js](https://nextjs.org/) (App Router)
+*   **Linguagem:** TypeScript / React
+*   **Estilização:** [Tailwind CSS](https://tailwindcss.com/)
+*   **PWA:** `next-pwa`
+*   **Dados:** Estrutura mockada em JSON (preparado para futura migração para Supabase/BaaS)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Como Executar o Projeto
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Pré-requisitos
+Certifique-se de ter o [Node.js](https://nodejs.org/) (versão 18.x ou superior) instalado em sua máquina.
 
-## Deploy on Vercel
+### Passos para Instalação
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/juliano-sousa/my-class.git
+   cd my-class
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+
+O projeto estará acessível em [http://localhost:3000](http://localhost:3000).
+
+---
+
+## 🎯 Planejamento ( Roadmap )
+
+### Fase 1: Setup e Configuração (Concluída ✅)
+- [x] Inicialização do projeto Next.js.
+- [x] Configuração do Design System via Tailwind CSS.
+- [x] Configuração do Progressive Web App (PWA) com ícones e manifest.
+- [x] Criação da estrutura de dados mockada.
+
+### Fase 2: Componentes UI (Em Andamento ⏳)
+- [ ] **Header:** Exibição do título "Salas de Aula" e avatar do usuário.
+- [ ] **TabNavigation:** Componente de alternância entre "Hoje" e "Semana".
+- [ ] **HeroCard:** Card de destaque para as aulas do dia.
+- [ ] **AlertBanner:** Notificações fixas sobre atualizações.
+- [ ] **ClassCard:** Cards individuais das disciplinas com detalhes de sala e horário.
+
+### Fase 3: Páginas e Lógica (Próximos Passos 🚀)
+- [ ] Implementação da lógica de filtragem de dados por dia da semana.
+- [ ] Desenvolvimento da aba "Semana" com visualização em grade (layout responsivo).
+- [ ] Integração da barra de busca para filtragem instantânea.
+
+### Fase 4: Refinamento e Deploy
+- [ ] Testes de responsividade (Mobile/Desktop).
+- [ ] Validação final do PWA.
+- [ ] Deploy na Vercel.
+
+---
+
+## 📝 Observações
+
+*   O projeto foi estruturado seguindo as melhores práticas do Next.js 14+ (App Router).
+*   A paleta de cores e tipografia foram adaptadas para uma experiência otimizada em dark mode.
+*   A arquitetura é modular, facilitando a futura integração com APIs ou bancos de dados (ex: Supabase).

@@ -3,7 +3,7 @@ export interface ClassEntry {
   dia_semana: string;
   disciplina: string;
   sala: string;
-  modalidade: "Presencial" | "Remoto Síncrono";
+  modalidade: "Presencial" | "Remoto Síncrono" | "Remoto Assíncrono";
   horario: string;
 }
 
@@ -206,7 +206,7 @@ export const classesData: ClassEntry[] = [
     disciplina: "Projeto Tecnológico Em Desenvolvimento De Sistemas",
     sala: "327",
     modalidade: "Remoto Síncrono",
-    horario: "Horário Noturno - 19h00",
+    horario: "Horário Vespertino - 14h00",
   },
   {
     id: "26",
@@ -214,6 +214,7 @@ export const classesData: ClassEntry[] = [
     disciplina: "Fundamentos De Inteligência Artificial",
     sala: "326",
     modalidade: "Remoto Síncrono",
-    horario: "Horário Noturno - 19h00",
+    horario: "Horário Matutino - 09h00",
   },
+  
 ];
