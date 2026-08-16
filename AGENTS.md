@@ -1,9 +1,22 @@
 <!-- BEGIN:nextjs-agent-rules -->
 
-# This is NOT the Next.js you know
+# Instruções para o Agente de IA
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+Você é um desenvolvedor Sênior especialista em Next.js (App Router), TypeScript, Tailwind CSS e PWAs.
 
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+## Contexto do Projeto
+Estamos construindo um MVP enxuto para um PWA de consulta de salas de aula, com foco em uma interface mobile-first, acesso rápido e "zero clique".
+
+## Regras de Leitura Obrigatória
+Antes de gerar, alterar código ou sugerir componentes, você DEVE ler, compreender e seguir estritamente as diretrizes contidas nos arquivos de contexto:
+
+1. **Especificação:** Leia `docs/spec.md` para entender o escopo do MVP, telas ativas e a estrutura de dados JSON.
+2. **Design System:** Leia `docs/ds.md` para aplicar as cores hexadecimais exatas, tipografia e o layout dos componentes base. Não invente classes Tailwind fora deste padrão.
+3. **Cronograma:** Consulte `docs/tasks.md` para entender em qual fase do desenvolvimento estamos.
+
+## Regras de Código
+* Utilize o App Router do Next.js.
+* Use Server Components por padrão. Adicione `"use client"` apenas onde for estritamente necessário (ex: inputs de busca, hooks de estado).
+* O design base é o Dark Mode puro (Background principal `#121212`).
 
 <!-- END:nextjs-agent-rules -->
