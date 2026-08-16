@@ -1,26 +1,47 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* =========================================
+   Design System Tokens – Salas de Aula
+   ========================================= */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Background */
+  --color-bg-primary: #121212;
+  --color-bg-secondary: #1e1e1e;
+
+  /* Accent */
+  --color-accent: #2563eb;
+  --color-accent-hover: #3b82f6;
+
+  /* Text */
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #9ca3af;
+
+  /* Border */
+  --color-border: #27272a;
+
+  /* Tailwind color aliases (standard names kept for utility classes) */
+  --color-background: var(--color-bg-primary);
+  --color-foreground: var(--color-text-primary);
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* =========================================
+   Global Resets
+   ========================================= */
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+  background-color: #121212;
+  color: #f9fafb;
+  font-family: var(--font-sans);
+  /* Force dark mode unconditionally (spec requirement) */
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
