@@ -24,7 +24,7 @@
     - [X] Agrupar dados por dia da semana e renderizar colunas.
 
 ## Fase 4: Refinamento
-- [ ] Testar layout em viewports mobile (iPhone SE até Pro Max) e garantir que a barra de abas e o input não quebrem o layout.
-- [ ] Validar comportamento do tema escuro puro (Dark Mode forçado na tag HTML/Body).
-- [ ] Realizar build de produção e testar instalação do PWA via navegador.
-- [ ] Deploy na Vercel.
+- [X] Testar layout em viewports mobile (iPhone SE até Pro Max) e garantir que a barra de abas e o input não quebrem o layout.
+- [X] Validar comportamento do tema escuro puro (Dark Mode forçado na tag HTML/Body).
+- [X] Realizar build de produção e testar instalação do PWA via navegador.
+- [X] Deploy na Vercel.

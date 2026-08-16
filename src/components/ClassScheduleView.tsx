@@ -15,6 +15,12 @@ export const ClassScheduleView: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>("hoje");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
+  // Clear search when switching tabs to avoid stale results
+  const handleTabChange = (tab: TabType) => {
+    setActiveTab(tab);
+    setSearchQuery("");
+  };
+
   // Detect current day on client
   const todayName = useMemo(() => getCurrentDayName(), []);
 
@@ -68,9 +74,10 @@ export const ClassScheduleView: React.FC = () => {
       <Header />
 
       {/* Main Container */}
-      <main className="flex-1 w-full max-w-md sm:max-w-3xl lg:max-w-6xl mx-auto px-4 py-4 sm:py-6 flex flex-col gap-4">
+      {/* pb-safe handles iOS home-bar overlap */}
+      <main className="flex-1 w-full max-w-md sm:max-w-3xl lg:max-w-6xl mx-auto px-4 py-4 sm:py-6 pb-safe flex flex-col gap-4">
         {/* Navigation Tabs */}
-        <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+        <TabNavigation activeTab={activeTab} onTabChange={handleTabChange} />
 
         {/* TAB: HOJE */}
         {activeTab === "hoje" && (

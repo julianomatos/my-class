@@ -1,0 +1,4 @@
+# Vercel ignore – exclui artefatos de desenvolvimento e docs locais
+docs/
+*.log
+.env*.local
