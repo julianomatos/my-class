@@ -14,14 +14,14 @@
 - [X] Criar componente `ClassCard` (Card de disciplina com formatação da sala em destaque azul).
 
 ## Fase 3: Páginas e Lógica
-- [ ] Criar função utilitária para descobrir o dia da semana atual (`new Date().getDay()`) e mapear para string (ex: "Segunda-feira").
-- [ ] **Aba "Hoje":**
-    - [ ] Filtrar dados do JSON correspondentes ao dia atual.
-    - [ ] Renderizar lista de `ClassCard`s.
-    - [ ] Adicionar input de busca (Client-side) para filtrar disciplinas/salas renderizadas.
-- [ ] **Aba "Semana" (Desktop e Mobile):**
-    - [ ] Baseado na `image_4fc19a.png`, criar layout com scroll horizontal (`overflow-x-auto`).
-    - [ ] Agrupar dados por dia da semana e renderizar colunas.
+- [X] Criar função utilitária para descobrir o dia da semana atual (`new Date().getDay()`) e mapear para string (ex: "Segunda-feira").
+- [X] **Aba "Hoje":**
+    - [X] Filtrar dados do JSON correspondentes ao dia atual.
+    - [X] Renderizar lista de `ClassCard`s.
+    - [X] Adicionar input de busca (Client-side) para filtrar disciplinas/salas renderizadas.
+- [X] **Aba "Semana" (Desktop e Mobile):**
+    - [X] Baseado na `image_4fc19a.png`, criar layout com scroll horizontal (`overflow-x-auto`).
+    - [X] Agrupar dados por dia da semana e renderizar colunas.
 
 ## Fase 4: Refinamento
 - [ ] Testar layout em viewports mobile (iPhone SE até Pro Max) e garantir que a barra de abas e o input não quebrem o layout.
