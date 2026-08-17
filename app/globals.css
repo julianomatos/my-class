@@ -36,8 +36,6 @@ html {
   color-scheme: dark;
   /* Prevents bright flash on overscroll (iOS rubber-band) */
   background-color: #121212;
-  /* Disable double-tap zoom on mobile */
-  touch-action: manipulation;
 }
 
 body {
@@ -47,8 +45,8 @@ body {
   font-family: var(--font-sans);
   /* Removes the grey flash on tap in iOS Safari */
   -webkit-tap-highlight-color: transparent;
-  /* Prevents overscroll bleed on iOS */
-  overscroll-behavior-y: none;
+  /* Allows smooth vertical page scrolling while containing overscroll bounce */
+  overscroll-behavior-y: contain;
 }
 
 *,

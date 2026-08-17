@@ -265,7 +265,7 @@ export const ClassScheduleView: React.FC = () => {
             />
 
             {/* Horizontal Scroll Layout for Mobile & Desktop Grid */}
-            <div className="w-full overflow-x-auto pb-6 snap-x touch-pan-x custom-scrollbar">
+            <div className="w-full overflow-x-auto pb-6 custom-scrollbar">
               <div className="flex gap-4 min-w-max lg:min-w-full lg:grid lg:grid-cols-3">
                 {ACADEMIC_DAYS.map((day: string) => {
                   const list = weekClassesGrouped.get(day) || [];
@@ -275,7 +275,7 @@ export const ClassScheduleView: React.FC = () => {
                   return (
                     <div
                       key={day}
-                      className={`w-[290px] sm:w-[320px] lg:w-full shrink-0 snap-start flex flex-col gap-3 bg-zinc-900/40 border rounded-2xl p-3.5 sm:p-4 transition-colors ${
+                      className={`w-[290px] sm:w-[320px] lg:w-full shrink-0 flex flex-col gap-3 bg-zinc-900/40 border rounded-2xl p-3.5 sm:p-4 transition-colors ${
                         isToday
                           ? "border-blue-600/50 bg-blue-950/10 ring-1 ring-blue-600/30"
                           : "border-zinc-800/80"
