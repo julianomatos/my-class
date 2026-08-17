@@ -17,13 +17,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Salas de Aula",
+  title: "My Class",
   description: "Consulta rápida de salas de aula — mobile-first, zero clique.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Salas",
+    title: "My Class",
   },
 };
 

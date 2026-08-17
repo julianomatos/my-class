@@ -1,5 +1,7 @@
+"use client";
+
 import React from "react";
-import { Clock, Laptop, MapPin } from "lucide-react";
+import { Clock, Laptop, MapPin, Star } from "lucide-react";
 
 interface ClassCardProps {
   disciplina: string;
@@ -8,6 +10,10 @@ interface ClassCardProps {
   modalidade: string;
   /** compact: stacked vertical layout for narrow week-grid columns */
   compact?: boolean;
+  /** Favorite state */
+  isFavorite?: boolean;
+  /** Callback to toggle favorite */
+  onToggleFavorite?: (e: React.MouseEvent) => void;
 }
 
 export const ClassCard: React.FC<ClassCardProps> = ({
@@ -16,30 +22,52 @@ export const ClassCard: React.FC<ClassCardProps> = ({
   sala,
   modalidade,
   compact = false,
+  isFavorite = false,
+  onToggleFavorite,
 }) => {
   const isRemoto = modalidade?.toLowerCase().includes("remoto");
 
   /* ──────────────────────────────────────────────────
    * COMPACT variant – used inside the Semana grid columns
-   * Layout: sala badge row (top-right) + discipline + metadata
+   * Layout: sala badge & star right-aligned + discipline + metadata
    * ────────────────────────────────────────────────── */
   if (compact) {
     return (
-      <div className="w-full bg-zinc-900 border border-zinc-800/90 rounded-xl p-3 transition-all duration-200 hover:border-zinc-700/80 shadow-sm">
-        {/* Top row: sala badge right-aligned */}
+      <div className="w-full bg-zinc-900 border border-zinc-800/90 rounded-xl p-3 transition-all duration-200 hover:border-zinc-700/80 shadow-sm relative group">
+        {/* Top row: discipline title + star + sala badge */}
         <div className="flex items-start justify-between gap-2 mb-2">
           {/* Discipline name */}
-          <h3 className="text-xs font-bold text-zinc-50 leading-snug tracking-tight line-clamp-3 flex-1 min-w-0">
+          <h3 className="text-xs font-bold text-zinc-50 leading-snug tracking-tight line-clamp-3 flex-1 min-w-0 pr-1">
             {disciplina}
           </h3>
-          {/* Sala badge */}
-          <div className="bg-zinc-950/80 border border-blue-600/40 rounded-lg px-2 py-1 text-center flex flex-col items-center justify-center shrink-0 min-w-[44px]">
-            <span className="block text-[8px] font-bold text-blue-400 tracking-wider uppercase leading-none mb-0.5">
-              SALA
-            </span>
-            <span className="block text-base font-black text-blue-400 leading-none">
-              {sala}
-            </span>
+
+          {/* Right Action Stack: Star & Sala */}
+          <div className="flex items-center gap-1.5 shrink-0">
+            {onToggleFavorite && (
+              <button
+                type="button"
+                onClick={onToggleFavorite}
+                className="p-1 rounded-md text-zinc-500 hover:text-amber-400 transition-colors focus:outline-none"
+                aria-label={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+                title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+              >
+                <Star
+                  className={`w-3.5 h-3.5 ${
+                    isFavorite
+                      ? "text-amber-400 fill-amber-400"
+                      : "text-zinc-500 hover:text-amber-400 fill-transparent"
+                  }`}
+                />
+              </button>
+            )}
+            <div className="bg-zinc-950/80 border border-blue-600/40 rounded-lg px-2 py-1 text-center flex flex-col items-center justify-center shrink-0 min-w-[44px]">
+              <span className="block text-[8px] font-bold text-blue-400 tracking-wider uppercase leading-none mb-0.5">
+                SALA
+              </span>
+              <span className="block text-base font-black text-blue-400 leading-none">
+                {sala}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -70,7 +98,7 @@ export const ClassCard: React.FC<ClassCardProps> = ({
 
   /* ──────────────────────────────────────────────────
    * DEFAULT variant – used in the Hoje list (full width)
-   * Layout: horizontal flex (info left, sala badge right)
+   * Layout: horizontal flex (info left, star + sala badge right)
    * ────────────────────────────────────────────────── */
   return (
     <div className="w-full bg-zinc-900 border border-zinc-800/90 rounded-2xl p-3.5 sm:p-5 transition-all duration-200 hover:border-zinc-700/80 shadow-md flex justify-between items-center gap-3">
@@ -105,14 +133,34 @@ export const ClassCard: React.FC<ClassCardProps> = ({
         </div>
       </div>
 
-      {/* Right Sala Badge — fixed width so it never squishes */}
-      <div className="bg-zinc-950/80 border border-blue-600/40 rounded-xl px-3 py-2 text-center flex flex-col items-center justify-center w-16 sm:w-20 shrink-0 shadow-sm">
-        <span className="block text-[9px] sm:text-[10px] font-bold text-blue-400 tracking-wider uppercase leading-none mb-1">
-          SALA
-        </span>
-        <span className="block text-lg sm:text-2xl font-black text-blue-400 leading-none">
-          {sala}
-        </span>
+      {/* Right Actions: Star Button & Sala Badge */}
+      <div className="flex items-center gap-2 shrink-0">
+        {onToggleFavorite && (
+          <button
+            type="button"
+            onClick={onToggleFavorite}
+            className="p-2 rounded-xl bg-zinc-950/40 border border-zinc-800 text-zinc-500 hover:text-amber-400 hover:border-zinc-700 transition-colors focus:outline-none"
+            aria-label={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+            title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+          >
+            <Star
+              className={`w-4 h-4 sm:w-5 sm:h-5 ${
+                isFavorite
+                  ? "text-amber-400 fill-amber-400"
+                  : "text-zinc-500 hover:text-amber-400 fill-transparent"
+              }`}
+            />
+          </button>
+        )}
+
+        <div className="bg-zinc-950/80 border border-blue-600/40 rounded-xl px-3 py-2 text-center flex flex-col items-center justify-center w-16 sm:w-20 shrink-0 shadow-sm">
+          <span className="block text-[9px] sm:text-[10px] font-bold text-blue-400 tracking-wider uppercase leading-none mb-1">
+            SALA
+          </span>
+          <span className="block text-lg sm:text-2xl font-black text-blue-400 leading-none">
+            {sala}
+          </span>
+        </div>
       </div>
     </div>
   );

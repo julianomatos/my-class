@@ -1,6 +1,6 @@
 {
-  "name": "Salas de Aula",
-  "short_name": "Salas",
+  "name": "My Class",
+  "short_name": "My Class",
   "description": "Consulta rápida de salas de aula — mobile-first, zero clique.",
   "start_url": "/",
   "display": "standalone",

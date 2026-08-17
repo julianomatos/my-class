@@ -1,21 +1,44 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Header } from "./Header";
 import { TabNavigation, TabType } from "./TabNavigation";
 import { HeroCard } from "./HeroCard";
-import { AlertBanner } from "./AlertBanner";
+
 import { ClassCard } from "./ClassCard";
 import { SearchInput } from "./SearchInput";
+import { FavoritesFilterPill, FilterMode } from "./FavoritesFilterPill";
 import { classesData, ClassEntry } from "@/data/classes";
 import { getCurrentDayName, ACADEMIC_DAYS } from "@/utils/date";
-import { CalendarX, SearchX, CalendarDays } from "lucide-react";
+import { useFavorites } from "@/hooks/useFavorites";
+import { CalendarX, SearchX, CalendarDays, Star, Sparkles } from "lucide-react";
 
 export const ClassScheduleView: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>("hoje");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filterMode, setFilterMode] = useState<FilterMode>("all");
+  const [userSetFilter, setUserSetFilter] = useState<boolean>(false);
 
-  // Clear search when switching tabs to avoid stale results
+  const { favorites, toggleFavorite, isFavorite, isMounted, hasFavorites } =
+    useFavorites();
+
+  // Handle client-side hydration default filter selection
+  useEffect(() => {
+    if (isMounted && !userSetFilter) {
+      if (hasFavorites) {
+        setFilterMode("favorites");
+      } else {
+        setFilterMode("all");
+      }
+    }
+  }, [isMounted, hasFavorites, userSetFilter]);
+
+  const handleFilterModeChange = (mode: FilterMode) => {
+    setFilterMode(mode);
+    setUserSetFilter(true);
+  };
+
+  // Clear search when switching tabs
   const handleTabChange = (tab: TabType) => {
     setActiveTab(tab);
     setSearchQuery("");
@@ -31,17 +54,25 @@ export const ClassScheduleView: React.FC = () => {
     );
   }, [todayName]);
 
-  // Filtered classes for "Hoje" with search query applied
+  // Filtered classes for "Hoje" based on FilterMode ("favorites" vs "all") and searchQuery
   const filteredTodayClasses = useMemo<ClassEntry[]>(() => {
-    if (!searchQuery.trim()) return todayClasses;
+    let list = todayClasses;
+
+    // Apply favorites filter mode if active and hydrated
+    if (isMounted && filterMode === "favorites") {
+      list = list.filter((c: ClassEntry) => favorites.includes(c.id));
+    }
+
+    if (!searchQuery.trim()) return list;
+
     const query = searchQuery.toLowerCase().trim();
-    return todayClasses.filter(
+    return list.filter(
       (c: ClassEntry) =>
         c.disciplina.toLowerCase().includes(query) ||
         c.sala.toLowerCase().includes(query) ||
         c.modalidade.toLowerCase().includes(query)
     );
-  }, [todayClasses, searchQuery]);
+  }, [todayClasses, filterMode, favorites, searchQuery, isMounted]);
 
   // Classes grouped by day for "Semana" tab
   const weekClassesGrouped = useMemo<Map<string, ClassEntry[]>>(() => {
@@ -52,6 +83,11 @@ export const ClassScheduleView: React.FC = () => {
       let list = classesData.filter(
         (c: ClassEntry) => c.dia_semana.toLowerCase() === day.toLowerCase()
       );
+
+      // If user selected "favorites" filter, apply to week view as well
+      if (isMounted && filterMode === "favorites") {
+        list = list.filter((c: ClassEntry) => favorites.includes(c.id));
+      }
 
       if (query) {
         list = list.filter(
@@ -66,7 +102,7 @@ export const ClassScheduleView: React.FC = () => {
     });
 
     return map;
-  }, [searchQuery]);
+  }, [searchQuery, filterMode, favorites, isMounted]);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col antialiased selection:bg-blue-600 selection:text-white">
@@ -74,7 +110,6 @@ export const ClassScheduleView: React.FC = () => {
       <Header />
 
       {/* Main Container */}
-      {/* pb-safe handles iOS home-bar overlap */}
       <main className="flex-1 w-full max-w-md sm:max-w-3xl lg:max-w-6xl mx-auto px-4 py-4 sm:py-6 pb-safe flex flex-col gap-4">
         {/* Navigation Tabs */}
         <TabNavigation activeTab={activeTab} onTabChange={handleTabChange} />
@@ -85,9 +120,6 @@ export const ClassScheduleView: React.FC = () => {
             {/* Hero Card with current day and total classes count */}
             <HeroCard dayName={todayName} count={todayClasses.length} />
 
-            {/* Alert Banner */}
-            {/* <AlertBanner /> */}
-
             {/* Search Input */}
             <SearchInput
               value={searchQuery}
@@ -95,10 +127,36 @@ export const ClassScheduleView: React.FC = () => {
               placeholder="Buscar por disciplina ou sala..."
             />
 
+            {/* Favorites Filter Pill Navigation */}
+            <div className="flex flex-col gap-2">
+              <FavoritesFilterPill
+                mode={filterMode}
+                onModeChange={handleFilterModeChange}
+                favoritesCount={favorites.length}
+              />
+
+              {/* Hint text when no favorites exist */}
+              {isMounted && !hasFavorites && (
+                <div className="flex items-center justify-center gap-1.5 text-[11px] text-zinc-400 bg-zinc-900/60 border border-zinc-800/60 rounded-xl px-3 py-1.5 max-w-xs mx-auto text-center">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <span>
+                    <strong className="text-zinc-300">Dica:</strong> Favorite disciplinas clicando na estrela para ver apenas a sua grade.
+                  </span>
+                </div>
+              )}
+            </div>
+
             {/* Classes List Header */}
             <div className="flex items-center justify-between mt-1 mb-0.5">
-              <h3 className="text-xs font-bold tracking-wider text-zinc-400 uppercase">
-                {searchQuery ? "Resultados da Busca" : "Aulas de Hoje"}
+              <h3 className="text-xs font-bold tracking-wider text-zinc-400 uppercase flex items-center gap-1.5">
+                {filterMode === "favorites" && (
+                  <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                )}
+                {searchQuery
+                  ? "Resultados da Busca"
+                  : filterMode === "favorites"
+                  ? "Minhas Aulas de Hoje"
+                  : "Aulas de Hoje"}
               </h3>
               <span className="text-xs font-medium text-zinc-500">
                 {filteredTodayClasses.length} de {todayClasses.length} aulas
@@ -115,8 +173,30 @@ export const ClassScheduleView: React.FC = () => {
                     horario={item.horario}
                     sala={item.sala}
                     modalidade={item.modalidade}
+                    isFavorite={isFavorite(item.id)}
+                    onToggleFavorite={() => toggleFavorite(item.id)}
                   />
                 ))}
+              </div>
+            ) : filterMode === "favorites" && !searchQuery ? (
+              /* Favorites Filter Empty State for Today */
+              <div className="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-7 text-center flex flex-col items-center justify-center gap-2.5 my-3">
+                <div className="p-3 bg-amber-500/10 rounded-full text-amber-400">
+                  <Star className="w-6 h-6" />
+                </div>
+                <p className="text-sm font-bold text-zinc-200">
+                  Nenhuma aula favoritada para {todayName}
+                </p>
+                <p className="text-xs text-zinc-400 max-w-xs leading-relaxed">
+                  Você possui {favorites.length} disciplina(s) favoritada(s), mas nenhuma tem aula hoje.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => handleFilterModeChange("all")}
+                  className="mt-1 text-xs font-semibold text-blue-400 hover:text-blue-300 underline underline-offset-4"
+                >
+                  Ver todas as aulas de hoje
+                </button>
               </div>
             ) : searchQuery ? (
               /* Search Empty State */
@@ -177,6 +257,13 @@ export const ClassScheduleView: React.FC = () => {
               placeholder="Filtrar matérias ou salas na semana..."
             />
 
+            {/* Favorites Filter Pill Navigation in Week view */}
+            <FavoritesFilterPill
+              mode={filterMode}
+              onModeChange={handleFilterModeChange}
+              favoritesCount={favorites.length}
+            />
+
             {/* Horizontal Scroll Layout for Mobile & Desktop Grid */}
             <div className="w-full overflow-x-auto pb-6 snap-x touch-pan-x custom-scrollbar">
               <div className="flex gap-4 min-w-max lg:min-w-full lg:grid lg:grid-cols-3">
@@ -222,6 +309,8 @@ export const ClassScheduleView: React.FC = () => {
                               sala={item.sala}
                               modalidade={item.modalidade}
                               compact
+                              isFavorite={isFavorite(item.id)}
+                              onToggleFavorite={() => toggleFavorite(item.id)}
                             />
                           ))}
                         </div>

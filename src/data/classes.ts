@@ -50,7 +50,7 @@ export const classesData: ClassEntry[] = [
   },
   {
     id: "6",
-    dia_semana: "Segunda-feira",
+    dia_semana: "Sexta-feira",
     disciplina: "Programação Para Dispositivos Móveis",
     sala: "317",
     modalidade: "Presencial",
@@ -187,14 +187,14 @@ export const classesData: ClassEntry[] = [
   {
     id: "23",
     dia_semana: "Sexta-feira",
-    disciplina: "Aplicações Front-End",
+    disciplina: "Desenvolvimento Front-End",
     sala: "326",
     modalidade: "Presencial",
     horario: "Horário Noturno - 19h00",
   },
   {
     id: "24",
-    dia_semana: "Sexta-feira",
+    dia_semana: "Quinta-feira",
     disciplina: "Qualidade E Testes De Software",
     sala: "316",
     modalidade: "Presencial",
