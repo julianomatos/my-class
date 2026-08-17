@@ -20,6 +20,14 @@ export const metadata: Metadata = {
   title: "My Class",
   description: "Consulta rápida de salas de aula — mobile-first, zero clique.",
   manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/icons/icon-192x192.png",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
