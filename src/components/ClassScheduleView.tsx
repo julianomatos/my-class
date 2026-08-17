@@ -86,7 +86,7 @@ export const ClassScheduleView: React.FC = () => {
             <HeroCard dayName={todayName} count={todayClasses.length} />
 
             {/* Alert Banner */}
-            <AlertBanner />
+            {/* <AlertBanner /> */}
 
             {/* Search Input */}
             <SearchInput
@@ -179,7 +179,7 @@ export const ClassScheduleView: React.FC = () => {
 
             {/* Horizontal Scroll Layout for Mobile & Desktop Grid */}
             <div className="w-full overflow-x-auto pb-6 snap-x touch-pan-x custom-scrollbar">
-              <div className="flex gap-4 min-w-max lg:min-w-full lg:grid lg:grid-cols-3 xl:grid-cols-6">
+              <div className="flex gap-4 min-w-max lg:min-w-full lg:grid lg:grid-cols-3">
                 {ACADEMIC_DAYS.map((day: string) => {
                   const list = weekClassesGrouped.get(day) || [];
                   const isToday =
@@ -213,7 +213,7 @@ export const ClassScheduleView: React.FC = () => {
 
                       {/* Day Column Content */}
                       {list.length > 0 ? (
-                        <div className="flex flex-col gap-2.5">
+                        <div className="flex flex-col gap-2">
                           {list.map((item: ClassEntry) => (
                             <ClassCard
                               key={item.id}
@@ -221,6 +221,7 @@ export const ClassScheduleView: React.FC = () => {
                               horario={item.horario}
                               sala={item.sala}
                               modalidade={item.modalidade}
+                              compact
                             />
                           ))}
                         </div>
