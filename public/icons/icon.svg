@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Solid background fill 100% area (#121212) with sharp edges for OS mask cutting -->
+  <rect width="512" height="512" fill="#121212" />
+
+  <!-- Central Badge container (within 20% Safe Zone margin) -->
+  <rect x="106" y="106" width="300" height="300" rx="64" fill="#2563EB" />
+
+  <!-- Door Closed Icon artwork centered -->
+  <g transform="translate(256, 256) scale(7.2) translate(-12, -12)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14" />
+    <path d="M2 20h20" />
+    <circle cx="10" cy="12" r="1.2" fill="#FFFFFF" stroke="none" />
+  </g>
+</svg>
